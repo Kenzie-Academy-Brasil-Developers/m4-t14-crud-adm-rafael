@@ -12,7 +12,7 @@ const reactivatingUserService = async (
           active = true
         WHERE
           id = $1
-        RETURNING id,name,email,active,admim;
+        RETURNING id,name,email,active,admin;
     `;
   const QueryConfig: QueryConfig = {
     text: queryString,

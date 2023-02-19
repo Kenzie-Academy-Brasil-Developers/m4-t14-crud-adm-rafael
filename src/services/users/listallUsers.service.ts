@@ -4,7 +4,7 @@ import { client } from "../../database";
 const ListAllUSersService = async (): Promise<Array<IUserWithoutPassword>> => {
   const query: string = `
         SELECT
-          id,email,admim,active
+          id,name,email,admin,active
         FROM 
           users;
     `;

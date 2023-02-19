@@ -6,7 +6,7 @@ import { AppError } from "../../erros";
 const seachUserProfile = async (id: number): Promise<IUserWithoutPassword> => {
   const query: string = `
     SELECT
-      id,name,email,active,admim
+      id,name,email,active,admin
     FROM 
       users
     WHERE

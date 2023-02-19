@@ -17,7 +17,7 @@ const CreatUserServices = async (
       users (%I)
     VALUES 
       (%L)
-    RETURNING id, name,email,admim,active;
+    RETURNING id, name,email,admin,active;
         `,
     Object.keys(data),
     Object.values(data)

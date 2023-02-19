@@ -22,7 +22,7 @@ const checkToken = async (
     }
     req.user = {
       idUser: Number(decod.sub),
-      typeUser: decod.admim,
+      typeUser: decod.admin,
     };
     next();
   });

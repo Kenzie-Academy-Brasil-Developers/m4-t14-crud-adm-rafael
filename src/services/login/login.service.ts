@@ -43,7 +43,7 @@ export const creatLogin = async (data: IUserLogin): Promise<string> => {
 
   const token: string = jwt.sign(
     {
-      admim: result.rows[0].admim ? result.rows[0].admim : false,
+      admin: result.rows[0].admin ? result.rows[0].admin : false,
       active: result.rows[0].active,
     },
     process.env.SECRET_KEY!,

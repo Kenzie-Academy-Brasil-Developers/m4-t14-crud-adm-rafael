@@ -5,7 +5,7 @@ const creatUserSchema = z.object({
   name: z.string().min(3).max(20),
   email: z.string().email(),
   password: z.string().transform((pass) => hashSync(pass)),
-  admim: z.boolean().optional(),
+  admin: z.boolean().optional(),
   active: z.boolean().optional(),
 });
 
@@ -27,7 +27,7 @@ const ResultUserSchema = z.object({
   name: z.string().min(3).max(20),
   email: z.string().email(),
   password: z.string().transform((pass) => hashSync(pass)),
-  admim: z.boolean(),
+  admin: z.boolean(),
   active: z.boolean(),
 });
 

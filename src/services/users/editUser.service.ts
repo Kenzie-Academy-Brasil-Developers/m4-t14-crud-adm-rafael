@@ -14,7 +14,7 @@ import { AppError } from "../../erros";
 const editUsersService = async (
   id: number,
   data: IEditUser,
-  admim: boolean
+  admin: boolean
 ): Promise<IUserWithoutPassword> => {
   let keys = Object.keys(data);
   let values = Object.values(data);
@@ -36,7 +36,7 @@ const editUsersService = async (
   const checkEmail = await client.query(QueryConfigCheckEmail);
 
   if (checkEmail.rowCount !== 0) {
-    if (checkEmail.rows[0].id !== id && !admim) {
+    if (checkEmail.rows[0].id !== id && !admin) {
       throw new AppError("E-mail already registered", 409);
     }
   }
@@ -50,7 +50,7 @@ const editUsersService = async (
         (%UP)
     WHERE 
        id = $1 
-    RETURNING id,name,email,admim,active;
+    RETURNING id,name,email,admin,active;
     `;
 
   query = query.replace("(%UP)", `${updates}`);

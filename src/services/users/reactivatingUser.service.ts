@@ -2,7 +2,7 @@ import { QueryConfig } from "pg";
 import { IUserResult, IUserWithoutPassword } from "../../interfaces";
 import { client } from "../../database";
 
-const reactivatingUserService = async (
+const ReactivatingUserService = async (
   id: number
 ): Promise<IUserWithoutPassword> => {
   const queryString: string = `
@@ -24,4 +24,4 @@ const reactivatingUserService = async (
   return result.rows[0];
 };
 
-export { reactivatingUserService };
+export { ReactivatingUserService };

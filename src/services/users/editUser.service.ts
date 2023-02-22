@@ -1,45 +1,14 @@
-import format from "pg-format";
-import {
-  IEditUser,
-  IUser,
-  IUserRequest,
-  IUserResult,
-  IUserResultComplet,
-  IUserWithoutPassword,
-} from "../../interfaces";
+import { IEditUser, IUserWithoutPassword } from "../../interfaces";
 import { client } from "../../database";
 import { QueryConfig, QueryResult } from "pg";
-import { AppError } from "../../erros";
 
-const editUsersService = async (
+const EditUsersService = async (
   id: number,
   data: IEditUser,
   admin: boolean
 ): Promise<IUserWithoutPassword> => {
   let keys = Object.keys(data);
   let values = Object.values(data);
-
-  const queryCheckEmail: string = `
-        SELECT
-            *
-        FROM
-            users
-        WHERE
-            email = $1;
-  `;
-
-  const QueryConfigCheckEmail: QueryConfig = {
-    text: queryCheckEmail,
-    values: [data.email],
-  };
-
-  const checkEmail = await client.query(QueryConfigCheckEmail);
-
-  if (checkEmail.rowCount !== 0) {
-    if (checkEmail.rows[0].id !== id && !admin) {
-      throw new AppError("E-mail already registered", 409);
-    }
-  }
 
   const updates: Array<string> = keys.map((e, i) => `${e} = '${values[i]}'`);
 
@@ -67,4 +36,4 @@ const editUsersService = async (
   return result.rows[0];
 };
 
-export { editUsersService };
+export { EditUsersService };

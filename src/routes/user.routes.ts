@@ -1,24 +1,39 @@
 import { Router } from "express";
 import {
-  checkUserProfile,
+  CheckUserProfile,
   CreatUsers,
-  deleteUser,
-  editUserControllers,
-  listAllUSers,
-  reactivatingUser,
+  DeleteUser,
+  EditUserControllers,
+  ListAllUSers,
+  ReactivatingUser,
 } from "../controllers/Users.cotrollers";
-import { checkToken } from "../middlewares/loginCheckToken";
+import { CheckToken } from "../middlewares/loginCheckToken";
 
 import { CheckIdUser } from "../middlewares/checkiIdUser";
+import checkEmailUser from "../middlewares/checkEmail";
+import { CheckAdm } from "../middlewares/checkAdm";
 
 const useRoutes: Router = Router();
 
-useRoutes.post("", CreatUsers);
+useRoutes.post("", checkEmailUser, CreatUsers);
 
-useRoutes.get("", checkToken, listAllUSers);
-useRoutes.get("/profile", checkToken, checkUserProfile);
-useRoutes.patch("/:id", CheckIdUser, checkToken, editUserControllers);
-useRoutes.delete("/:id", CheckIdUser, checkToken, deleteUser);
-useRoutes.put("/:id/recover", CheckIdUser, checkToken, reactivatingUser);
+useRoutes.get("", CheckToken, CheckAdm, ListAllUSers);
+useRoutes.get("/profile", CheckToken, CheckUserProfile);
+useRoutes.patch(
+  "/:id",
+  CheckIdUser,
+  CheckToken,
+  CheckAdm,
+  checkEmailUser,
+  EditUserControllers
+);
+useRoutes.delete("/:id", CheckIdUser, CheckToken, CheckAdm, DeleteUser);
+useRoutes.put(
+  "/:id/recover",
+  CheckIdUser,
+  CheckToken,
+  CheckAdm,
+  ReactivatingUser
+);
 
 export default useRoutes;

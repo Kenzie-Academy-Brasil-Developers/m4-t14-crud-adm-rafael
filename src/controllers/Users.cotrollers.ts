@@ -1,13 +1,13 @@
 import { Response, Request } from "express";
-import { CreatUserServices } from "../services/users/CreatUsers.service";
 import { IUserRequest, IUserWithoutPassword } from "../interfaces";
-import { ListAllUSersService } from "../services/users/listallUsers.service";
-import { seachUserProfile } from "../services/users/seachUserProfile.service";
 import { creatUserSchemaEdit } from "../Schema/user.schema";
-import { deleteUserService } from "../services/users/deleteUser.service";
-import { editUsersService } from "../services/users/editUser.service";
 import { AppError } from "../erros";
-import { reactivatingUserService } from "../services/users/reactivatingUser.service";
+import { CreatUserServices } from "../services/users/CreatUsers.service";
+import { ListAllUSersService } from "../services/users/ListallUsers.service";
+import { EditUsersService } from "../services/users/EditUser.service";
+import { DeleteUserService } from "../services/users/DeleteUser.service";
+import { ReactivatingUserService } from "../services/users/ReactivatingUser.service";
+import SeachUserProfile from "../services/users/SeachUserProfile.service";
 
 const CreatUsers = async (req: Request, res: Response): Promise<Response> => {
   const useData: IUserRequest = req.body;
@@ -17,57 +17,48 @@ const CreatUsers = async (req: Request, res: Response): Promise<Response> => {
   return res.status(201).json(newUser);
 };
 
-const listAllUSers = async (req: Request, res: Response): Promise<Response> => {
-  if (!req.user.typeUser) {
-    return res.status(403).json({
-      message: "Insufficient Permission",
-    });
-  }
-
+const ListAllUSers = async (req: Request, res: Response): Promise<Response> => {
   const UsersList: Array<IUserWithoutPassword> = await ListAllUSersService();
 
   return res.status(200).json(UsersList);
 };
 
-const checkUserProfile = async (
+const CheckUserProfile = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
   const id: number = req.user.idUser;
 
-  const user: IUserWithoutPassword = await seachUserProfile(id);
+  const user: IUserWithoutPassword = await SeachUserProfile(id);
 
   return res.status(200).json(user);
 };
 
-const editUserControllers = async (
+const EditUserControllers = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
   const data = creatUserSchemaEdit.parse(req.body);
   const id: number = Number(req.params.id);
 
-  if (id !== req.user.idUser && !req.user.typeUser) {
-    throw new AppError("Insufficient Permission", 403);
-  }
-  const userEdit = await editUsersService(id, data, req.user.typeUser);
+  const userEdit: IUserWithoutPassword = await EditUsersService(
+    id,
+    data,
+    req.user.typeUser
+  );
 
   return res.status(200).json(userEdit);
 };
 
-const deleteUser = async (req: Request, res: Response): Promise<Response> => {
+const DeleteUser = async (req: Request, res: Response): Promise<Response> => {
   const id: number = Number(req.params.id);
 
-  if (id !== req.user.idUser && !req.user.typeUser) {
-    throw new AppError("Insufficient Permission", 403);
-  }
-
-  deleteUserService(id);
+  DeleteUserService(id);
 
   return res.status(201).send();
 };
 
-const reactivatingUser = async (
+const ReactivatingUser = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
@@ -81,16 +72,16 @@ const reactivatingUser = async (
     throw new AppError("User already active", 403);
   }
 
-  const user = await reactivatingUserService(id);
+  const user: IUserWithoutPassword = await ReactivatingUserService(id);
 
   return res.status(200).json(user);
 };
 
 export {
   CreatUsers,
-  listAllUSers,
-  checkUserProfile,
-  editUserControllers,
-  deleteUser,
-  reactivatingUser,
+  ListAllUSers,
+  CheckUserProfile,
+  EditUserControllers,
+  DeleteUser,
+  ReactivatingUser,
 };

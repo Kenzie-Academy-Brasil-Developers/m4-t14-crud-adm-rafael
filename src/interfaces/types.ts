@@ -2,12 +2,12 @@ import { QueryResult } from "pg";
 import {
   creatUserSchema,
   creatUserSchemaEdit,
-  IUserLoginSchema,
   IUserSchema,
   IUserSchemaNoPassword,
   ResultUserSchema,
 } from "../Schema/user.schema";
 import { z } from "zod";
+import { IUserLoginSchema } from "../Schema/login.schema";
 
 type IUserRequest = z.infer<typeof creatUserSchema>;
 

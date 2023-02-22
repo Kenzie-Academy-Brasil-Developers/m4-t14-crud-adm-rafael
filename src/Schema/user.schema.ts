@@ -35,16 +35,10 @@ const IUserSchemaNoPassword = IUserSchema.omit({
   password: true,
 });
 
-const IUserLoginSchema = z.object({
-  email: z.string(),
-  password: z.string(),
-});
-
 export {
   creatUserSchema,
   IUserSchema,
   IUserSchemaNoPassword,
   ResultUserSchema,
-  IUserLoginSchema,
   creatUserSchemaEdit,
 };

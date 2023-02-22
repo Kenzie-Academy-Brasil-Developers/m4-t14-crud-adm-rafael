@@ -1,7 +1,7 @@
 import { QueryConfig } from "pg";
 import { client } from "../../database";
 
-const deleteUserService = async (id: number): Promise<void> => {
+const DeleteUserService = async (id: number): Promise<void> => {
   const query: string = `
         UPDATE
             users
@@ -18,4 +18,4 @@ const deleteUserService = async (id: number): Promise<void> => {
   await client.query(QueryConfig);
 };
 
-export { deleteUserService };
+export { DeleteUserService };

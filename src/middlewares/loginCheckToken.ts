@@ -1,9 +1,9 @@
 import { NextFunction, Request, Response } from "express";
 import { AppError } from "../erros";
 import jwt from "jsonwebtoken";
-import { number } from "zod";
+import { QueryArrayConfig } from "pg";
 
-const checkToken = async (
+const CheckToken = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -28,4 +28,4 @@ const checkToken = async (
   });
 };
 
-export { checkToken };
+export { CheckToken };

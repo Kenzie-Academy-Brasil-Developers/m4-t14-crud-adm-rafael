@@ -3,7 +3,7 @@ import { client } from "../../database";
 import { QueryConfig } from "pg";
 import { AppError } from "../../erros";
 
-const seachUserProfile = async (id: number): Promise<IUserWithoutPassword> => {
+const SeachUserProfile = async (id: number): Promise<IUserWithoutPassword> => {
   const query: string = `
     SELECT
       id,name,email,active,admin
@@ -27,4 +27,4 @@ const seachUserProfile = async (id: number): Promise<IUserWithoutPassword> => {
   return result.rows[0];
 };
 
-export { seachUserProfile };
+export default SeachUserProfile;

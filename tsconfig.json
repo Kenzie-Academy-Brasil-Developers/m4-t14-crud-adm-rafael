@@ -9,6 +9,6 @@
     "exactOptionalPropertyTypes": true,
     "skipLibCheck": true
   },
-  "include": ["src/*", "app.ts"],
+  "include": ["src"],
   "exclude": ["node_modules"]
 }
